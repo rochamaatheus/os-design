@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OS Saúde | Medicina Integrada</title>
+
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              brand: '#49C26C',
+              brandDark: '#2E8E4D',
+              quantum: '#00F0FF',
+            },
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+              display: ['Bebas Neue', 'sans-serif'],
+            },
+          },
+        },
+      };
+    </script>
+
+    <!-- Google Fonts + Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue:wght@400;700&family=Inter:wght@400;600;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+
+    <style>
+      /* --------------- animações utilitárias --------------- */
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-20px);
+        }
+      }
+      @keyframes fadeUp {
+        0% {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        100% {
+          opacity: 1;
+          transform: none;
+        }
+      }
+      .floating {
+        animation: float 6s ease-in-out infinite;
+      }
+      .lift {
+        transition: transform 0.3s ease;
+      }
+      .lift:hover {
+        transform: translateY(-6px) scale(1.02);
+      }
+      .scroll-reveal {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      .scroll-reveal.show {
+        opacity: 1;
+        transform: none;
+        transition: 0.7s;
+      }
+      .animate-fade-up {
+        animation: fadeUp 0.7s ease-out forwards;
+      }
+      .blob {
+        filter: blur(60px);
+        opacity: 0.15;
+        pointer-events: none;
+      }
+      .clip-top {
+        clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+      }
+      .clip-btm {
+        clip-path: polygon(0 15%, 100% 0, 100% 100%, 0 85%);
+      }
+      .text-stroke {
+        -webkit-text-stroke: 1px #000;
+        color: transparent;
+      }
+
+      .benef-card {
+        background-color: #fff;
+        padding: 2rem;
+        border-radius: 1rem;
+        box-shadow: 0 1px 10px rgba(0, 0, 0, 0.05);
+        font-size: 1.125rem;
+        font-weight: 500;
+        position: relative;
+        transition: all 0.3s ease;
+        opacity: 0;
+        transform: translateY(20px);
+        animation: fadeUp 0.7s ease-out forwards;
+      }
+      .benef-card:hover {
+        transform: translateY(-6px) scale(1.02);
+      }
+      .benef-card span {
+        display: block;
+        font-size: 2.5rem;
+        font-weight: 800;
+        color: #49c26c;
+        margin-bottom: 0.75rem;
+        transition: transform 0.3s ease;
+      }
+      .benef-card:hover span {
+        transform: scale(1.2) rotate(-2deg);
+      }
+
+      /* blob decorativo */
+      .blob-bg {
+        position: fixed;
+        inset: 0;
+        overflow: hidden;
+        z-index: -1;
+      }
+
+      /* acessibilidade motion */
+      @media (prefers-reduced-motion: reduce) {
+        .floating,
+        .animate-fade-up {
+          animation: none !important;
+        }
+      }
+    </style>
+  </head>
+
+  <body class="font-sans text-[#1A1A1A] scroll-smooth overflow-x-hidden">
+    <header class="fixed top-0 w-full z-50 bg-white/90 backdrop-blur shadow-sm">
+      <nav
+        class="max-w-7xl mx-auto flex items-center justify-between px-6 md:px-10 h-16"
+      >
+        <a href="#" class="font-extrabold text-xl">OS Saúde</a>
+        <ul class="hidden md:flex space-x-8 font-semibold">
+          <li><a href="#inicio" class="hover:text-brand">Início</a></li>
+          <li><a href="#missao" class="hover:text-brand">Missão</a></li>
+          <li><a href="#servicos" class="hover:text-brand">Serviços</a></li>
+          <li>
+            <a href="#oportunidades" class="hover:text-brand">Oportunidades</a>
+          </li>
+        </ul>
+        <a
+          href="#contato"
+          class="bg-brand hover:bg-brandDark text-white text-sm font-semibold px-5 py-2 rounded-md transition"
+          >Contato</a
+        >
+      </nav>
+    </header>
+
+    <main>
+      <!-- ----------- BLOBS DECORATIVOS ----------- -->
+      <div class="blob-bg">
+        <div
+          class="absolute top-1/4 left-1/4 w-72 h-72 rounded-full bg-brand blob"
+        ></div>
+        <div
+          class="absolute -top-10 right-1/3 w-96 h-96 rounded-full bg-brandDark blob"
+        ></div>
+        <div
+          class="absolute bottom-1/4 right-1/4 w-80 h-80 rounded-full bg-quantum blob"
+        ></div>
+      </div>
+
+      <!-- ----------- HERO ----------- -->
+      <section
+        id="inicio"
+        class="clip-top bg-white pt-32 md:pt-40 pb-24 scroll-reveal"
+      >
+        <div
+          class="max-w-7xl mx-auto grid lg:grid-cols-12 gap-10 items-center px-6 md:px-10"
+        >
+          <div class="lg:col-span-7 space-y-6">
+            <h1 class="text-4xl md:text-6xl font-extrabold leading-tight">
+              <span class="text-brand">Soluções integradas</span> para médicos e
+              profissionais da saúde
+            </h1>
+            <p class="text-lg max-w-xl">
+              Otimizamos gestão de clínicas e consultórios para você focar no
+              que importa: cuidar de pessoas.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 pt-2">
+              <a
+                href="#contato"
+                class="bg-brand hover:bg-brandDark text-white font-bold px-8 py-3 rounded-full text-center"
+                >Quero saber mais</a
+              >
+              <a
+                href="#servicos"
+                class="border-2 border-brand text-brand hover:bg-brand hover:text-white font-bold px-8 py-3 rounded-full text-center"
+                >Nossos Serviços</a
+              >
+            </div>
+          </div>
+          <!-- floating wrapper para evitar jitter -->
+          <div class="lg:col-span-5 relative space-y-10">
+            <div class="lift">
+              <div
+                class="floating w-64 mx-auto rounded-3xl overflow-hidden border-8 border-[#1A1A1A] shadow-lg"
+              >
+                <img
+                  src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=600&q=80"
+                  alt="App OS Saúde"
+                  class="h-96 w-full object-cover"
+                />
+              </div>
+            </div>
+            <div
+              class="lift bg-brand text-white p-6 rounded-2xl max-w-xs mx-auto text-center shadow-lg"
+            >
+              <i class="fas fa-user-nurse text-2xl mb-3"></i>
+              <h3 class="font-bold text-lg">Atendimento Humanizado</h3>
+              <p class="text-sm mt-1">
+                Tecnologia que aproxima médico e paciente.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ----------- MISSÃO ----------- -->
+      <section
+        id="missao"
+        class="clip-btm bg-gray-50 py-28 px-6 md:px-10 scroll-reveal"
+      >
+        <div class="max-w-7xl mx-auto grid lg:grid-cols-5 gap-12 items-center">
+          <div class="lg:col-span-3">
+            <h2 class="text-4xl md:text-6xl font-display mb-8">
+              <span class="text-stroke">01</span>
+              <span class="text-brand">Nossa</span> Missão
+            </h2>
+            <p class="text-lg md:text-xl mb-6 max-w-3xl">
+              Acreditamos que a próxima década da medicina será definida por
+              profissionais que usam a tecnologia como parceira, não apenas
+              ferramenta.
+            </p>
+            <p class="text-lg md:text-xl mb-8 max-w-3xl">
+              A OS Saúde conecta recursos digitais, equipe multidisciplinar e
+              inteligência de dados para oferecer cuidado mais preciso,
+              acessível e humano.
+            </p>
+            <div class="flex items-center space-x-4">
+              <div class="w-16 h-1 bg-brand"></div>
+              <span class="text-brand font-bold">Desde 2015</span>
+            </div>
+          </div>
+          <div
+            class="lg:col-span-2 lift bg-white border border-gray-200 p-8 rounded-3xl shadow animate-fade-up"
+          >
+            <h3 class="text-2xl font-bold mb-4">Por que escolher a gente?</h3>
+            <ul class="space-y-3 text-sm">
+              <li class="flex">
+                <span class="text-brand mr-3">✓</span>Suporte completo de
+                implantação &amp; treinamento
+              </li>
+              <li class="flex">
+                <span class="text-brand mr-3">✓</span>Infra cloud com
+                SLA&nbsp;99,9%
+              </li>
+              <li class="flex">
+                <span class="text-brand mr-3">✓</span>BI clínico e financeiro
+                integrado
+              </li>
+              <li class="flex">
+                <span class="text-brand mr-3">✓</span>Compliance LGPD de ponta a
+                ponta
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- ----------- STATS ----------- -->
+      <section class="py-20 px-6 md:px-10 bg-white scroll-reveal">
+        <div
+          class="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-10 text-center"
+        >
+          <div>
+            <div class="text-5xl font-display text-brand mb-2">110k+</div>
+            <p>Vidas atendidas</p>
+          </div>
+          <div>
+            <div class="text-5xl font-display text-brand mb-2">12</div>
+            <p>Estados</p>
+          </div>
+          <div>
+            <div class="text-5xl font-display text-brand mb-2">96%</div>
+            <p>Satisfação</p>
+          </div>
+          <div>
+            <div class="text-5xl font-display text-brand mb-2">40%</div>
+            <p>Produtividade ↑</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ----------- TECNOLOGIA ----------- -->
+      <section class="clip-btm bg-white py-28 px-6 md:px-10 scroll-reveal">
+        <div class="max-w-7xl mx-auto grid lg:grid-cols-5 gap-12 items-center">
+          <div class="lg:col-span-2 animate-fade-up">
+            <img
+              src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=600&q=80"
+              alt="Tech"
+              class="rounded-3xl shadow-2xl floating"
+              loading="lazy"
+            />
+          </div>
+          <div
+            class="lg:col-span-3 animate-fade-up"
+            style="animation-delay: 0.15s"
+          >
+            <h2 class="text-4xl md:text-6xl font-display mb-8">
+              <span class="text-stroke">02</span>
+              <span class="text-brand">Tecnologia</span> que Amplifica
+            </h2>
+            <p class="text-lg md:text-xl mb-8">
+              Nossa plataforma não substitui sua expertise — ela amplia. Suporte
+              diagnóstico em tempo real, analytics preditivo e recomendações
+              personalizadas em poucos cliques.
+            </p>
+            <div class="grid md:grid-cols-2 gap-6">
+              <div
+                class="lift bg-gray-50 border border-gray-200 p-6 rounded-2xl animate-fade-up"
+              >
+                <h3 class="font-bold text-xl mb-2 text-brand">
+                  OS Cloud Prontuário
+                </h3>
+                <p class="text-sm text-gray-600">
+                  Acesso seguro a históricos de pacientes de qualquer lugar.
+                </p>
+              </div>
+              <div
+                class="lift bg-gray-50 border border-gray-200 p-6 rounded-2xl animate-fade-up"
+                style="animation-delay: 0.1s"
+              >
+                <h3 class="font-bold text-xl mb-2 text-brand">
+                  OS BI Analytics
+                </h3>
+                <p class="text-sm text-gray-600">
+                  Dashboards que reduzem custos e maximizam receita.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ----------- SERVIÇOS ----------- -->
+      <section id="servicos" class="bg-white py-20 scroll-reveal">
+        <div class="max-w-7xl mx-auto px-6 md:px-10">
+          <h2
+            class="text-4xl md:text-6xl font-display text-center mb-16 animate-fade-up"
+          >
+            <span class="text-stroke">03</span>
+            <span class="text-brand">Nossos</span> Serviços
+          </h2>
+
+          <div
+            id="serviceGrid"
+            class="grid gap-8 md:grid-cols-2 lg:grid-cols-4"
+          ></div>
+        </div>
+      </section>
+
+      <!-- ----------- BENEFÍCIOS ----------- -->
+      <section
+        class="bg-brand/5 py-20 scroll-reveal clip-btm bg-brand/5 py-20 scroll-reveal"
+      >
+        <div class="max-w-7xl mx-auto px-6 md:px-10">
+          <h2
+            class="text-4xl md:text-6xl font-display text-center mb-16 animate-fade-up"
+          >
+            <span class="text-stroke">04</span>
+            <span class="text-brand">Benefícios</span> para Clientes
+          </h2>
+
+          <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-4 text-center">
+            <div class="benef-card"><span>1</span>Redução de Custos</div>
+            <div class="benef-card"><span>2</span>Mais Eficiência</div>
+            <div class="benef-card"><span>3</span>Melhor Atendimento</div>
+            <div class="benef-card"><span>4</span>Dados Seguros</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ----------- OPORTUNIDADES ----------- -->
+      <section id="oportunidades" class="bg-gray-50 py-28 scroll-reveal">
+        <div class="max-w-7xl mx-auto px-6">
+          <h2
+            class="text-4xl md:text-6xl font-display text-center mb-16 animate-fade-up"
+          >
+            <span class="text-stroke">05</span>
+            <span class="text-brand">Oportunidades</span> em Destaque
+          </h2>
+
+          <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 animate-fade-up">
+            <!-- 1 -->
+            <div
+              class="border border-gray-200 rounded-xl overflow-hidden hover:shadow-lg transition lift"
+              style="animation-delay: 0s"
+            >
+              <div class="h-48 bg-red-100 flex items-center justify-center">
+                <i class="fas fa-crutch text-6xl text-red-600"></i>
+              </div>
+              <div class="p-6">
+                <div class="flex justify-between mb-3">
+                  <h3 class="font-bold text-xl">Traumatologista</h3>
+                  <span
+                    class="bg-red-100 text-red-600 px-3 py-1 rounded-full text-sm"
+                    >SP</span
+                  >
+                </div>
+                <p class="text-gray-600 mb-4">
+                  Centro ortopédico busca especialista para pronto-socorro.
+                </p>
+                <div class="flex justify-between items-center">
+                  <span class="text-red-600 font-bold">R$ 30.000/mês</span>
+                  <a
+                    href="#contato"
+                    class="text-red-600 hover:text-red-800 font-medium"
+                    >Aplicar →</a
+                  >
+                </div>
+              </div>
+            </div>
+
+            <!-- 2 -->
+            <div
+              class="border border-gray-200 rounded-xl overflow-hidden hover:shadow-lg transition lift"
+              style="animation-delay: 0.05s"
+            >
+              <div class="h-48 bg-indigo-100 flex items-center justify-center">
+                <i class="fas fa-tint text-6xl text-indigo-600"></i>
+              </div>
+              <div class="p-6">
+                <div class="flex justify-between mb-3">
+                  <h3 class="font-bold text-xl">Urologista</h3>
+                  <span
+                    class="bg-indigo-100 text-indigo-600 px-3 py-1 rounded-full text-sm"
+                    >RJ</span
+                  >
+                </div>
+                <p class="text-gray-600 mb-4">
+                  Clínica de referência contrata para atendimento ambulatorial.
+                </p>
+                <div class="flex justify-between items-center">
+                  <span class="text-indigo-600 font-bold">R$ 27.000/mês</span>
+                  <a
+                    href="#contato"
+                    class="text-indigo-600 hover:text-indigo-800 font-medium"
+                    >Aplicar →</a
+                  >
+                </div>
+              </div>
+            </div>
+
+            <!-- 3 -->
+            <div
+              class="border border-gray-200 rounded-xl overflow-hidden hover:shadow-lg transition lift"
+              style="animation-delay: 0.1s"
+            >
+              <div class="h-48 bg-green-100 flex items-center justify-center">
+                <i class="fas fa-baby text-6xl text-green-600"></i>
+              </div>
+              <div class="p-6">
+                <div class="flex justify-between mb-3">
+                  <h3 class="font-bold text-xl">Pediatra</h3>
+                  <span
+                    class="bg-green-100 text-green-600 px-3 py-1 rounded-full text-sm"
+                    >MG</span
+                  >
+                </div>
+                <p class="text-gray-600 mb-4">
+                  Hospital infantil amplia equipe para plantões e consultas.
+                </p>
+                <div class="flex justify-between items-center">
+                  <span class="text-green-600 font-bold">R$ 22.000/mês</span>
+                  <a
+                    href="#contato"
+                    class="text-green-600 hover:text-green-800 font-medium"
+                    >Aplicar →</a
+                  >
+                </div>
+              </div>
+            </div>
+
+            <!-- 4 -->
+            <div
+              class="border border-gray-200 rounded-xl overflow-hidden hover:shadow-lg transition lift"
+              style="animation-delay: 0.15s"
+            >
+              <div class="h-48 bg-yellow-100 flex items-center justify-center">
+                <i class="fas fa-ear-listen text-6xl text-yellow-600"></i>
+              </div>
+              <div class="p-6">
+                <div class="flex justify-between mb-3">
+                  <h3 class="font-bold text-xl">Otorrino</h3>
+                  <span
+                    class="bg-yellow-100 text-yellow-600 px-3 py-1 rounded-full text-sm"
+                    >PR</span
+                  >
+                </div>
+                <p class="text-gray-600 mb-4">
+                  Clínica auditiva procura especialista para agenda lotada.
+                </p>
+                <div class="flex justify-between items-center">
+                  <span class="text-yellow-600 font-bold">R$ 24.000/mês</span>
+                  <a
+                    href="#contato"
+                    class="text-yellow-600 hover:text-yellow-800 font-medium"
+                    >Aplicar →</a
+                  >
+                </div>
+              </div>
+            </div>
+
+            <!-- 5 -->
+            <div
+              class="border border-gray-200 rounded-xl overflow-hidden hover:shadow-lg transition lift"
+              style="animation-delay: 0.2s"
+            >
+              <div class="h-48 bg-teal-100 flex items-center justify-center">
+                <i class="fas fa-syringe text-6xl text-teal-600"></i>
+              </div>
+              <div class="p-6">
+                <div class="flex justify-between mb-3">
+                  <h3 class="font-bold text-xl">Anestesista</h3>
+                  <span
+                    class="bg-teal-100 text-teal-600 px-3 py-1 rounded-full text-sm"
+                    >SC</span
+                  >
+                </div>
+                <p class="text-gray-600 mb-4">
+                  Equipe cirúrgica de alta complexidade contrata.
+                </p>
+                <div class="flex justify-between items-center">
+                  <span class="text-teal-600 font-bold">R$ 35.000/mês</span>
+                  <a
+                    href="#contato"
+                    class="text-teal-600 hover:text-teal-800 font-medium"
+                    >Aplicar →</a
+                  >
+                </div>
+              </div>
+            </div>
+
+            <!-- 6 -->
+            <div
+              class="border border-gray-200 rounded-xl overflow-hidden hover:shadow-lg transition lift"
+              style="animation-delay: 0.25s"
+            >
+              <div class="h-48 bg-pink-100 flex items-center justify-center">
+                <i class="fas fa-person-pregnant text-6xl text-pink-600"></i>
+              </div>
+              <div class="p-6">
+                <div class="flex justify-between mb-3">
+                  <h3 class="font-bold text-xl">Obstetra</h3>
+                  <span
+                    class="bg-pink-100 text-pink-600 px-3 py-1 rounded-full text-sm"
+                    >RS</span
+                  >
+                </div>
+                <p class="text-gray-600 mb-4">
+                  Maternidade de referência amplia corpo clínico.
+                </p>
+                <div class="flex justify-between items-center">
+                  <span class="text-pink-600 font-bold">R$ 26.000/mês</span>
+                  <a
+                    href="#contato"
+                    class="text-pink-600 hover:text-pink-800 font-medium"
+                    >Aplicar →</a
+                  >
+                </div>
+              </div>
+            </div>
+
+            <!-- 7 -->
+            <div
+              class="border border-gray-200 rounded-xl overflow-hidden hover:shadow-lg transition lift"
+              style="animation-delay: 0.3s"
+            >
+              <div class="h-48 bg-purple-100 flex items-center justify-center">
+                <i class="fas fa-heart-pulse text-6xl text-purple-600"></i>
+              </div>
+              <div class="p-6">
+                <div class="flex justify-between mb-3">
+                  <h3 class="font-bold text-xl">Ecografista</h3>
+                  <span
+                    class="bg-purple-100 text-purple-600 px-3 py-1 rounded-full text-sm"
+                    >BA</span
+                  >
+                </div>
+                <p class="text-gray-600 mb-4">
+                  Clínica diagnóstica contrata para exames de imagem.
+                </p>
+                <div class="flex justify-between items-center">
+                  <span class="text-purple-600 font-bold">R$ 20.000/mês</span>
+                  <a
+                    href="#contato"
+                    class="text-purple-600 hover:text-purple-800 font-medium"
+                    >Aplicar →</a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="text-center mt-12">
+            <a
+              href="#contato"
+              class="inline-block bg-brand hover:bg-brandDark text-white px-8 py-4 rounded-full font-bold"
+            >
+              Ver todas as oportunidades
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ----------- HISTÓRIAS DE SUCESSO ----------- -->
+      <section id="sucesso" class="clip-top bg-white py-28 scroll-reveal">
+        <div class="max-w-7xl mx-auto px-6">
+          <h2
+            class="text-4xl md:text-6xl font-display text-center mb-16 animate-fade-up"
+          >
+            <span class="text-stroke">06</span>
+            <span class="text-brand">Histórias</span> de Sucesso
+          </h2>
+
+          <div class="grid lg:grid-cols-3 gap-8">
+            <!-- CARD 1 -->
+            <div
+              class="lift p-8 border rounded-3xl shadow-sm animate-fade-up flex flex-col justify-between min-h-[360px]"
+            >
+              <div>
+                <div class="text-brand text-5xl mb-4">"</div>
+                <p class="text-lg mb-6">
+                  A OS Saúde revolucionou minha clínica. Em 6 meses aumentamos
+                  35 % os atendimentos sem perder qualidade.
+                </p>
+              </div>
+              <div class="flex items-center mt-auto">
+                <img
+                  src="https://randomuser.me/api/portraits/men/32.jpg"
+                  class="w-12 h-12 rounded-full mr-4"
+                  loading="lazy"
+                />
+                <div>
+                  <div class="font-bold">Dr. João Silva</div>
+                  <div class="text-sm text-gray-500">Cardiologista – SP</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- CARD 2 -->
+            <div
+              class="lift p-8 border rounded-3xl shadow-sm animate-fade-up flex flex-col justify-between min-h-[360px]"
+              style="animation-delay: 0.1s"
+            >
+              <div>
+                <div class="text-brand text-5xl mb-4">"</div>
+                <p class="text-lg mb-6">
+                  Reduzi 8 h/sem de burocracia e ganhei tempo para pesquisa.
+                </p>
+              </div>
+              <div class="flex items-center mt-auto">
+                <img
+                  src="https://randomuser.me/api/portraits/women/65.jpg"
+                  class="w-12 h-12 rounded-full mr-4"
+                  loading="lazy"
+                />
+                <div>
+                  <div class="font-bold">Dra. Fernanda Lima</div>
+                  <div class="text-sm text-gray-500">Neurologista – MG</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- CARD 3 -->
+            <div
+              class="lift p-8 border rounded-3xl shadow-sm animate-fade-up flex flex-col justify-between min-h-[360px]"
+              style="animation-delay: 0.2s"
+            >
+              <div>
+                <div class="text-brand text-5xl mb-4">"</div>
+                <p class="text-lg mb-6">
+                  Agendamento online elevou a ocupação das agendas em 40 %.
+                </p>
+              </div>
+              <div class="flex items-center mt-auto">
+                <img
+                  src="https://randomuser.me/api/portraits/men/83.jpg"
+                  class="w-12 h-12 rounded-full mr-4"
+                  loading="lazy"
+                />
+                <div>
+                  <div class="font-bold">Dr. Carlos Menezes</div>
+                  <div class="text-sm text-gray-500">Pediatra – RJ</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ----------- CTA ----------- -->
+      <section
+        class="bg-gradient-to-r from-brand to-brandDark text-white py-24 scroll-reveal"
+      >
+        <div class="max-w-7xl mx-auto text-center px-6">
+          <h2 class="text-3xl md:text-4xl font-extrabold mb-6">
+            Pronto para transformar sua gestão em saúde?
+          </h2>
+          <p class="text-lg md:text-xl mb-10 max-w-3xl mx-auto">
+            Fale agora mesmo com nosso time especializado e descubra como
+            podemos ajudar.
+          </p>
+          <a
+            href="https://wa.me/5500000000000"
+            class="inline-block bg-white text-brand font-bold px-10 py-4 rounded-full hover:bg-gray-100"
+            rel="noopener"
+            ><i class="fab fa-whatsapp mr-2"></i>WhatsApp</a
+          >
+        </div>
+      </section>
+    </main>
+
+    <!-- ----------- FORMULÁRIO DE APLICAÇÃO ----------- -->
+    <section id="formulario" class="clip-top bg-gray-100 py-28 scroll-reveal">
+      <div class="max-w-7xl mx-auto px-6 md:px-10">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <!-- LADO ESQUERDO -->
+          <div class="scroll-reveal">
+            <h2 class="text-4xl md:text-6xl font-display mb-8">
+              <span class="text-stroke">07</span>
+              <span class="text-brand">Candidate-se</span> Agora
+            </h2>
+            <p class="text-lg text-gray-700 mb-8 max-w-lg">
+              Junte-se a dezenas de profissionais que estão transformando a
+              saúde com a OS Saúde.
+            </p>
+            <div class="flex items-center space-x-4">
+              <div class="w-16 h-1 bg-brand"></div>
+              <span class="text-brand font-bold">Vagas abertas</span>
+            </div>
+          </div>
+
+          <!-- LADO DIREITO (FORM) -->
+          <div class="scroll-reveal" style="transition-delay: 0.2s">
+            <form
+              class="bg-white border border-gray-200 p-8 rounded-3xl shadow-lg space-y-4"
+              onsubmit="event.preventDefault(); alert('Enviado com sucesso!')"
+            >
+              <h3 class="text-2xl font-bold mb-6">Formulário de Aplicação</h3>
+              <div>
+                <input
+                  type="text"
+                  placeholder="Nome completo"
+                  required
+                  class="w-full bg-white border-b border-gray-300 py-3 px-4 focus:outline-none focus:border-brand"
+                />
+              </div>
+              <div>
+                <input
+                  type="email"
+                  placeholder="E-mail"
+                  required
+                  class="w-full bg-white border-b border-gray-300 py-3 px-4 focus:outline-none focus:border-brand"
+                />
+              </div>
+              <div>
+                <select
+                  required
+                  class="w-full bg-white border-b border-gray-300 py-3 px-4 focus:outline-none focus:border-brand text-gray-700"
+                >
+                  <option disabled selected>Especialidade</option>
+                  <option>Cardiologia</option>
+                  <option>Neurologia</option>
+                  <option>Pediatria</option>
+                  <option>Ortopedia</option>
+                  <option>Ginecologia</option>
+                  <option>Outros</option>
+                </select>
+              </div>
+              <div>
+                <input
+                  type="number"
+                  placeholder="Anos de experiência"
+                  class="w-full bg-white border-b border-gray-300 py-3 px-4 focus:outline-none focus:border-brand"
+                />
+              </div>
+              <button
+                type="submit"
+                class="w-full bg-brand hover:bg-brandDark text-white font-bold py-4 px-8 rounded-full transition-all mt-4"
+              >
+                Enviar Aplicação
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ----------- FOOTER ----------- -->
+    <footer id="contato" class="bg-[#1A1A1A] text-gray-400 py-16 scroll-reveal">
+      <div class="max-w-7xl mx-auto grid md:grid-cols-4 gap-10 px-6 md:px-10">
+        <div>
+          <h3 class="text-white text-xl font-extrabold mb-4">OS Saúde</h3>
+          <p>Medicina Integrada com tecnologia e humanização.</p>
+        </div>
+        <div>
+          <h4 class="text-white font-semibold mb-4">Links</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="#inicio" class="hover:text-white">Início</a></li>
+            <li><a href="#missao" class="hover:text-white">Missão</a></li>
+            <li><a href="#servicos" class="hover:text-white">Serviços</a></li>
+            <li>
+              <a href="#oportunidades" class="hover:text-white"
+                >Oportunidades</a
+              >
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-white font-semibold mb-4">Contato</h4>
+          <p>contato@ossaude.com.br<br />(XX) XXXX-XXXX<br />Cidade, Estado</p>
+        </div>
+        <div>
+          <h4 class="text-white font-semibold mb-4">Social</h4>
+          <div class="flex space-x-4">
+            <a
+              href="#"
+              class="w-8 h-8 flex items-center justify-center bg-gray-700 rounded-full hover:bg-brand"
+              ><i class="fab fa-linkedin-in text-white text-sm"></i
+            ></a>
+            <a
+              href="#"
+              class="w-8 h-8 flex items-center justify-center bg-gray-700 rounded-full hover:bg-brand"
+              ><i class="fab fa-instagram text-white text-sm"></i
+            ></a>
+            <a
+              href="#"
+              class="w-8 h-8 flex items-center justify-center bg-gray-700 rounded-full hover:bg-brand"
+              ><i class="fab fa-facebook-f text-white text-sm"></i
+            ></a>
+          </div>
+        </div>
+      </div>
+      <div class="border-t border-gray-800 text-center mt-12 pt-6 text-sm">
+        © 2025 OS Saúde. Todos os direitos reservados.
+      </div>
+    </footer>
+
+    <!-- ----------- JS scroll-reveal + serviços ----------- -->
+    <script>
+      /* IntersectionObserver scroll-reveal */
+      const io = new IntersectionObserver(
+        entries =>
+          entries.forEach(
+            e => e.isIntersecting && e.target.classList.add('show'),
+          ),
+        { threshold: 0.1 },
+      );
+      document.querySelectorAll('.scroll-reveal').forEach(el => io.observe(el));
+
+      /* Serviços – injeta cards */
+      const data = [
+        [
+          'fa-clinic-medical',
+          'Gestão de Clínicas',
+          'Administração 360° para clínicas e consultórios.',
+        ],
+        [
+          'fa-video',
+          'Telemedicina',
+          'Consultas remotas com segurança e qualidade.',
+        ],
+        [
+          'fa-file-medical',
+          'Prontuário Digital',
+          'Histórico acessível de qualquer lugar.',
+        ],
+        [
+          'fa-calendar-alt',
+          'Agendamento Online',
+          'Agenda inteligente sem burocracias.',
+        ],
+      ];
+      const grid = document.getElementById('serviceGrid');
+      data.forEach(([icon, title, text], i) => {
+        grid.insertAdjacentHTML(
+          'beforeend',
+          `
+        <div class="p-8 bg-white rounded-2xl shadow lift transition duration-300 animate-fade-up" style="animation-delay:${
+          i * 0.05
+        }s">
+          <div class="w-14 h-14 mb-4 flex items-center justify-center rounded-xl
+                      bg-gradient-to-br from-brand to-brandDark text-white text-xl">
+            <i class="fas ${icon}"></i>
+          </div>
+          <h3 class="font-bold text-lg mb-2">${title}</h3>
+          <p class="text-sm text-gray-600">${text}</p>
+        </div>`,
+        );
+      });
+    </script>
+  </body>
+</html>

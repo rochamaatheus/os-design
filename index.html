@@ -219,13 +219,19 @@
           <div class="lg:col-span-5 relative space-y-10">
             <div class="lift">
               <div
-                class="floating w-64 mx-auto rounded-3xl pr-2 overflow-hidden border-8 border-[#1A1A1A] shadow-lg"
+                class="relative w-64 mx-auto floating rounded-3xl pr-2 overflow-hidden border-8 border-[#1A1A1A] shadow-lg"
               >
                 <img
                   src="logo-os.png"
                   alt="Logo OS Saúde"
                   class="h-96 w-full object-cover"
                 />
+                <div
+                  class="absolute bottom-[103px] left-[115px] -translate-x-1/2 text-center px-4 py-1 text-[11px] font-semibold text-white whitespace-nowrap"
+                >
+                  OS Saúde<br />
+                  Medicina Integrada
+                </div>
               </div>
             </div>
             <div
@@ -301,7 +307,7 @@
             <p>Vidas atendidas</p>
           </div>
           <div>
-            <div class="text-5xl font-display text-brand mb-2">12</div>
+            <div class="text-5xl font-display text-brand mb-2">6</div>
             <p>Estados</p>
           </div>
           <div>
@@ -379,7 +385,7 @@
           </h2>
           <div
             id="serviceGrid"
-            class="grid gap-8 md:grid-cols-2 lg:grid-cols-4"
+            class="grid gap-8 md:grid-cols-2 lg:grid-cols-3 justify-center"
           ></div>
         </div>
       </section>
@@ -397,7 +403,7 @@
             <div class="benef-card"><span>1</span>Redução de Custos</div>
             <div class="benef-card"><span>2</span>Mais Eficiência</div>
             <div class="benef-card"><span>3</span>Melhor Atendimento</div>
-            <div class="benef-card"><span>4</span>Ótimo Atendimento</div>
+            <div class="benef-card"><span>4</span>Decisões Inteligentes</div>
           </div>
         </div>
       </section>
@@ -881,11 +887,6 @@
           'fa-file-medical',
           'Prontuário Digital',
           'Histórico acessível de qualquer lugar.',
-        ],
-        [
-          'fa-calendar-alt',
-          'Agendamento Online',
-          'Agenda inteligente sem burocracias.',
         ],
       ];
       const grid = document.getElementById('serviceGrid');

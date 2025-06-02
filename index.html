@@ -39,6 +39,117 @@
     />
 
     <style>
+      /* === TIPOGRAFIA SEMÂNTICA PARA OS SAÚDE === */
+
+      /* --------- TÍTULOS --------- */
+
+      /* título-1: Usado no <h1> principal */
+      .titulo-1 {
+        font-family: 'Bebas Neue', sans-serif;
+        font-size: 2.25rem; /* equivalente a text-4xl */
+        line-height: 1.25; /* equivalente a leading-tight */
+      }
+      @media (min-width: 768px) {
+        .titulo-1 {
+          font-size: 3.75rem; /* equivalente a md:text-6xl */
+        }
+      }
+      @media (min-width: 1024px) {
+        .titulo-1 {
+          font-size: 4.5rem; /* equivalente a lg:text-7xl */
+        }
+      }
+
+      /* título-2: Cabeçalhos de seção (ex.: “Missão”, “Serviços”) */
+      .titulo-2 {
+        font-family: 'Bebas Neue', sans-serif;
+        font-size: 2.25rem; /* text-4xl */
+        text-align: center;
+        margin-bottom: 4rem; /* mb-16 */
+      }
+      @media (min-width: 768px) {
+        .titulo-2 {
+          font-size: 3.75rem; /* md:text-6xl */
+        }
+      }
+      @media (min-width: 1024px) {
+        .titulo-2 {
+          font-size: 4.5rem; /* lg:text-7xl */
+        }
+      }
+
+      /* título-3: Subtítulos internos (ex.: “Por que escolher a gente?”) */
+      .titulo-3 {
+        font-family: 'Bebas Neue', sans-serif;
+        font-size: 1.5rem; /* text-2xl */
+        margin-bottom: 1.5rem; /* mb-6 */
+      }
+      @media (min-width: 768px) {
+        .titulo-3 {
+          font-size: 2.25rem; /* md:text-4xl */
+        }
+      }
+
+      /* --------- CORPO DE TEXTO --------- */
+
+      /* corpo-1: Parágrafos de destaque abaixo de um título */
+      .corpo-1 {
+        font-size: 1.125rem; /* text-lg */
+        margin-bottom: 2rem; /* mb-8 */
+      }
+      @media (min-width: 768px) {
+        .corpo-1 {
+          font-size: 1.25rem; /* md:text-xl */
+        }
+      }
+      @media (min-width: 1024px) {
+        .corpo-1 {
+          font-size: 1.5rem; /* lg:text-2xl */
+        }
+      }
+
+      /* corpo-2: Parágrafos secundários */
+      .corpo-2 {
+        font-size: 1.125rem; /* text-lg */
+        margin-bottom: 1.5rem; /* mb-6 */
+      }
+      @media (min-width: 768px) {
+        .corpo-2 {
+          font-size: 1.25rem; /* md:text-xl */
+        }
+      }
+
+      /* corpo-3: Texto de apoio (legendas, descrições de cards) */
+      .corpo-3 {
+        font-size: 0.875rem; /* text-sm */
+        color: #4b5563; /* text-gray-600 */
+      }
+      @media (min-width: 768px) {
+        .corpo-3 {
+          font-size: 1rem; /* md:text-base */
+        }
+      }
+
+      /* --------- DIFERENCIAIS --------- */
+
+      /* diferencial-1: Destaques pontuais (ex.: “OS Saúde” no footer) */
+      .diferencial-1 {
+        font-weight: 800; /* font-extrabold */
+        font-size: 1.25rem; /* text-xl */
+      }
+
+      /* diferencial-2: Títulos de cards ou botões */
+      .diferencial-2 {
+        font-weight: 700; /* font-bold */
+        font-size: 1.125rem; /* text-lg */
+      }
+
+      /* diferencial-3: Textos explicativos menores (ex.: “Cardiologista – SP”) */
+      .diferencial-3 {
+        font-weight: 500; /* font-medium */
+        font-size: 0.875rem; /* text-sm */
+        color: #6b7280; /* text-gray-500 */
+      }
       /* animações */
       @keyframes float {
         0%,
@@ -150,7 +261,7 @@
       >
         <a href="#inicio" class="flex items-center space-x-2">
           <img src="logo-os.png" alt="Logo OS Saúde" class="h-8 w-auto" />
-          <span class="font-extrabold text-xl hidden sm:inline-block"
+          <span class="font-display text-xl hidden sm:inline-block"
             >OS Saúde</span
           >
         </a>
@@ -194,7 +305,7 @@
         >
           <div class="lg:col-span-7 space-y-6">
             <h1
-              class="text-4xl md:text-6xl lg:text-7xl font-extrabold leading-tight"
+              class="text-4xl md:text-6xl lg:text-7xl font-display leading-tight"
             >
               <span class="text-brand">Soluções integradas</span> para médicos e
               profissionais da saúde
@@ -253,7 +364,9 @@
           class="relative z-10 max-w-7xl mx-auto px-6 md:px-10 grid lg:grid-cols-5 gap-12 items-center"
         >
           <div class="lg:col-span-3">
-            <h2 class="text-4xl md:text-6xl lg:text-7xl font-display mb-8">
+            <h2
+              class="text-4xl md:text-6xl lg:text-7xl font-display text-center mb-16 animate-fade-up"
+            >
               <span class="text-stroke">01</span>
               <span class="text-brand">Nossa</span> Missão
             </h2>
@@ -732,7 +845,7 @@
         class="bg-gradient-to-r from-brand to-brandDark text-white py-24 scroll-reveal"
       >
         <div class="relative z-10 max-w-7xl mx-auto px-6 md:px-10 text-center">
-          <h2 class="text-3xl md:text-4xl lg:text-5xl font-extrabold mb-6">
+          <h2 class="text-3xl md:text-4xl lg:text-5xl font-display mb-6">
             Pronto para transformar sua gestão em saúde?
           </h2>
           <p class="text-lg md:text-xl lg:text-2xl mb-10 max-w-3xl mx-auto">
@@ -842,7 +955,7 @@
       >
         <div>
           <img src="logo-os.png" alt="Logo OS Saúde" class="h-20" />
-          <h3 class="text-white text-xl font-extrabold mb-4">OS Saúde</h3>
+          <h3 class="text-white text-xl font-display mb-4">OS Saúde</h3>
           <p>Medicina Integrada com tecnologia e humanização.</p>
         </div>
         <div>
